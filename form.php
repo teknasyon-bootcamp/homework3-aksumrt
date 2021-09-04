@@ -24,3 +24,57 @@
  * 
  * > **Not: İsteyenler `app2.php` ve `form2.php` isminde dosyalar oluşturup sınıfa farklı özellikler kazandırabilir.
  */
+
+class Form {
+    //$fields property was defined
+    public array $fields;
+    //$action and $method properties were defined
+    private function __construct(
+        
+        private string $action,
+        private string $method,
+    ){
+    }
+    //Creates a form object with parameters
+    public static function createForm(string $action,string $method) : Form {
+        return new static($action,$method);
+    }
+    //Creates a Post form with createForm method
+    public static function createPostForm(string $action) : Form {
+        return self::createForm($action,"POST");
+    }
+    //Creates a Get form with createForm method
+    public static function createGetForm(string $action):Form{
+        return self::createForm($action,"GET");
+    }
+    //Add $label,$name and $val variables in fields[] array
+    public function addField(string $label, string $name, ?int $val = null) : void {
+        $this->fields[]= array(
+            "label" => $label,
+            "name" => $name,
+            "val" => $val
+        );
+       
+    }
+    //Determines method for form object
+    public function setMethod(string $method) : void {
+        $this->method = $method;
+    }
+    //Render a HTML Form for object
+    public function render() : void {
+        echo "<form action=' $this->action' method=' $this->method '>";
+        
+        foreach($this->fields as $field)
+        {
+            echo "<label for='" . $field["name"] . "'>" . $field["label"] . "</label>";
+            echo "<input type='text' name='" . $field["name"] . "' value='" . $field["val"] . "'/>";
+        }
+        echo " ";
+        echo "<button type='submit'>Gönder</button>";
+        echo "</form>";
+
+    }
+
+
+
+}
