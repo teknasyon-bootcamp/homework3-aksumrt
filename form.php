@@ -27,7 +27,7 @@
 
 class Form {
     //$fields property was defined
-    public array $fields;
+    public array $fields = [];
     //$action and $method properties were defined
     private function __construct(
         
@@ -49,7 +49,7 @@ class Form {
     }
     //Add $label,$name and $val variables in fields[] array
     public function addField(string $label, string $name, ?int $val = null) : void {
-        $this->fields[]= array(
+        $this->fields[] = array(
             "label" => $label,
             "name" => $name,
             "val" => $val
